@@ -5,6 +5,11 @@ const   mongoose    =   require('mongoose'),
         app         =   express();
 
 
+
+//routes
+const   pageRoutes  =   require('./routes/pageRoutes');
+
+
 //setting up the port
 const port = process.env.PORT || 5000;
 
@@ -34,14 +39,10 @@ mongoose.connect(dbURI,{useUnifiedTopology: true,useNewUrlParser: true})
 
 //routes
 app.get('/',(req,res)=>{
-    res.send('home');
-    //res.render('home');
+    res.redirect('/home');
 })
 
-app.get('/hidden',(req,res)=>{
-    res.send('hidden');
-    //res.render('hidden')
-})
+app.use(pageRoutes);
 
 app.get('*',(req,res)=>{
     res.send('this page doesn\'t exist');
