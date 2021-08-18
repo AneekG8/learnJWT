@@ -1,7 +1,7 @@
 const pageController    =   require('../controllers/pageController'),
       { Router }        =   require('express');
 
- const router = Router();
+const router = Router();
 
 router.get('/home',(req,res)=>{
     pageController.home_get(req,res);

@@ -7,7 +7,8 @@ const   mongoose    =   require('mongoose'),
 
 
 //routes
-const   pageRoutes  =   require('./routes/pageRoutes');
+const   pageRoutes  =   require('./routes/pageRoutes'),
+        authRoutes  =   require('./routes/authRoutes');
 
 
 //setting up the port
@@ -43,6 +44,8 @@ app.get('/',(req,res)=>{
 })
 
 app.use(pageRoutes);
+
+app.use(authRoutes);
 
 app.get('*',(req,res)=>{
     res.send('this page doesn\'t exist');
