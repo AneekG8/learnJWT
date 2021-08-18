@@ -1,0 +1,19 @@
+{
+  "name": "learnjwt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AneekG8/learnJWT.git"
+  },
+  "author": "Aneek Ghosh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AneekG8/learnJWT/issues"
+  },
+  "homepage": "https://github.com/AneekG8/learnJWT#readme"
+}
