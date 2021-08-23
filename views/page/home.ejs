@@ -13,12 +13,20 @@
         <a href="/hidden">know my secret here!</a>
     </div>
 
-    <div>
-        <a href="/login">log in</a>
-    </div>
-    
-    <div>
-        <a href="/signup">sign up</a>
-    </div>
+    <% if(isAuth){ %>    
+        <div>
+            <form action="/logout" method="POST">
+                <button>logout</button>
+            </form>
+        </div>
+    <% }else{ %>
+        <div>
+            <a href="/login?redirectTo=/home">log in</a>
+        </div>
+        
+        <div>
+            <a href="/signup?redirectTo=/home">sign up</a>
+        </div>
+    <% } %>
 </body>
 </html>
