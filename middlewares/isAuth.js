@@ -7,11 +7,9 @@ const isAuth = (req,res,next)=>{
 
         try{
             const decodedToken = jwt.verify(token,process.env.SESSION_SECRET);
-            //console.log(decodedToken);
             next();
         }
         catch(err){
-            //console.log(err.message);
             res.redirect(`/login?redirectTo=${req.path}`);
         }
     }

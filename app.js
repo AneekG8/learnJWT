@@ -1,9 +1,7 @@
 const   cookieParser    =   require('cookie-parser'),
-        MongoStore      =   require('connect-mongo'),
         mongoose        =   require('mongoose'),
         express         =   require('express'),
         dotenv          =   require('dotenv').config(),
-        session         =   require('express-session'),
         jwt             =   require('jsonwebtoken'),
 
         app             =   express();
@@ -33,6 +31,8 @@ app.use(express.json());    //json parser
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 
+
+//check user on each route
 app.use((req,res,next) => {
     const token = req.cookies.jwt;
 
@@ -52,22 +52,6 @@ app.use((req,res,next) => {
     next();
 })
 
-
-//session
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-        mongoUrl: dbURI,
-        mongoOptions: dbOptions,
-        collectionName: 'sessions'
-    }),
-    cookie:{
-        httpOnly: true,
-        maxAge: 60*60* 100
-    }
-}))
 
 //DB connections
 mongoose.connect(dbURI,dbOptions)

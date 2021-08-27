@@ -1,6 +1,5 @@
 const { response } = require('express');
-const session   =   require('express-session'),
-      User      =   require('../models/User'),
+const User      =   require('../models/User'),
       bcrypt    =   require('bcrypt'),
       jwt       =   require('jsonwebtoken');
 
