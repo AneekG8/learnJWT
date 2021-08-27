@@ -1,10 +1,23 @@
-const session = require('express-session');
-const User      =   require('../models/User'),
-      bcrypt    =   require('bcrypt');
+const { response } = require('express');
+const session   =   require('express-session'),
+      User      =   require('../models/User'),
+      bcrypt    =   require('bcrypt'),
+      jwt       =   require('jsonwebtoken');
 
 //some handler functions
-const authenticateUser = (req)=>{
-    req.session.isAuth = true;
+const authenticateUser = (req,res,id)=>{
+    const token = jwt.sign(
+        { id },
+        process.env.SESSION_SECRET,
+        {
+            expiresIn: "20s"
+    });
+
+    res.cookie('jwt',token,{
+        maxAge: 20*1000,
+        secure: true,
+        httpOnly: true
+    });
 }
 
 const login_get = (req,res) => {
@@ -35,7 +48,7 @@ const login_post = async (req,res)=>{
                 res.render('auth/login');
 
             }else{
-                authenticateUser(req);
+                authenticateUser(req,res,user._id);
 
                 if(!req.query.redirectTo)
                     return res.redirectTo('/home');
@@ -57,7 +70,7 @@ const signup_get = (req,res) => {
 const signup_post = async (req,res) => {
     try{
         const newUser = await User.create(req.body);
-        authenticateUser(req);
+        authenticateUser(req,res,newUser._id);
         res.redirect(req.query.redirectTo);
     }
     catch(err){
@@ -75,7 +88,7 @@ const signup_post = async (req,res) => {
 }
 
 const logout_post = (req,res)=>{
-    req.session.destroy();
+    res.cookie('jwt','',{maxAge: 0});
     res.redirect('back');
 }
 

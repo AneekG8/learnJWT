@@ -4,6 +4,7 @@ const   cookieParser    =   require('cookie-parser'),
         express         =   require('express'),
         dotenv          =   require('dotenv').config(),
         session         =   require('express-session'),
+        jwt             =   require('jsonwebtoken'),
 
         app             =   express();
 
@@ -31,6 +32,25 @@ app.use(express.static('public'));  //use public as the static folder
 app.use(express.json());    //json parser
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
+
+app.use((req,res,next) => {
+    const token = req.cookies.jwt;
+
+    if(token){
+        try{
+            const decodedToken = jwt.verify(token,process.env.SESSION_SECRET);
+            res.locals.isAuth = true;
+        }
+        catch(err){
+            res.locals.isAuth = false;
+        }
+    }
+    else{
+        res.locals.isAuth = false;
+    }
+
+    next();
+})
 
 
 //session

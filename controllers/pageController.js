@@ -1,5 +1,5 @@
 const home_get = (req,res) => {
-    res.render('page/home',{isAuth : req.session.isAuth});
+    res.render('page/home');
 }
 
 const hidden_get = (req,res) => {
